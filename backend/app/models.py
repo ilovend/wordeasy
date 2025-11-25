@@ -26,8 +26,10 @@ class Progress(Base):
     
     word_id = Column(Integer, ForeignKey("words.id"), primary_key=True)
     mastery_level = Column(Integer, default=0)  # 0陌生/1熟悉/2掌握
-    next_review = Column(Date, nullable=True)
-    error_count = Column(Integer, default=0)
+    next_review = Column(Date, nullable=True, index=True)  # 添加索引以优化复习查询
+    error_count = Column(Integer, default=0, index=True)  # 添加索引以优化错词查询
+    last_reviewed = Column(Date, nullable=True)  # 最后复习日期
+    review_count = Column(Integer, default=0)  # 复习次数
     
     # 关系
     word = relationship("Word", back_populates="progress")

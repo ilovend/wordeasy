@@ -25,6 +25,8 @@ export const useGameStore = defineStore('game', () => {
   const error = ref(null)
   const learningMode = ref(false) // 学习模式标志
   const challengeMode = ref(false) // 挑战模式标志
+  const reviewMode = ref(false) // 复习模式标志
+  const errorBookMode = ref(false) // 错词本模式标志
   const studiedWords = ref(new Set()) // 已学习的单词ID集合
 
   // 计算属性
@@ -156,6 +158,8 @@ export const useGameStore = defineStore('game', () => {
     // 从学习模式切换到挑战模式
     learningMode.value = false
     challengeMode.value = true
+    reviewMode.value = false
+    errorBookMode.value = false
     gameStarted.value = true
     currentWordIndex.value = 0
     score.value = 0
@@ -164,6 +168,32 @@ export const useGameStore = defineStore('game', () => {
     correctCount.value = 0
     totalCount.value = 0
     error.value = null
+  }
+
+  async function startErrorBook() {
+    // 启动错词本模式
+    try {
+      const words = await api.getErrorWords(settingsStore.wordsPerRound || 10)
+      
+      if (!words || words.length === 0) {
+        return { success: false, message: '暂无错误单词需要练习' }
+      }
+      
+      currentWords.value = words
+      currentWordIndex.value = 0
+      learningMode.value = true
+      challengeMode.value = false
+      reviewMode.value = false
+      errorBookMode.value = true
+      gameStarted.value = false
+      studiedWords.value.clear()
+      difficulty.value = 0 // 错词本模式没有固定难度
+      
+      return { success: true, count: words.length }
+    } catch (err) {
+      console.error('加载错词本失败:', err)
+      return { success: false, message: '加载错词本失败' }
+    }
   }
 
   function resetGame() {
@@ -180,6 +210,8 @@ export const useGameStore = defineStore('game', () => {
     error.value = null
     learningMode.value = false
     challengeMode.value = false
+    reviewMode.value = false
+    errorBookMode.value = false
     studiedWords.value.clear()
   }
 
@@ -207,6 +239,8 @@ export const useGameStore = defineStore('game', () => {
     error,
     learningMode,
     challengeMode,
+    reviewMode,
+    errorBookMode,
     studiedWords,
     // 计算属性
     currentWord,
@@ -216,6 +250,7 @@ export const useGameStore = defineStore('game', () => {
     startGame,
     startLearning,
     startChallenge,
+    startErrorBook,
     markWordAsStudied,
     submitAnswer,
     nextWord,

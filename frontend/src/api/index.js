@@ -3,6 +3,7 @@
  * 优化：添加统一错误处理、请求重试、加载状态
  */
 import axios from 'axios'
+import toast from '@/utils/toast'
 
 const API_BASE_URL = '/api'
 const DEFAULT_TIMEOUT = 60000
@@ -36,12 +37,12 @@ apiClient.interceptors.response.use(
   },
   error => {
     // 统一错误处理
+    let errorMessage = '未知错误'
+    
     if (error.code === 'ECONNABORTED') {
-      console.error('请求超时')
-      error.message = '请求超时，请检查网络连接'
+      errorMessage = '请求超时，请检查网络连接'
     } else if (error.code === 'ERR_NETWORK') {
-      console.error('网络错误')
-      error.message = '网络错误，请确认后端服务已启动'
+      errorMessage = '网络错误，请确认后端服务已启动'
     } else if (error.response) {
       // 服务器返回错误
       const status = error.response.status
@@ -49,20 +50,26 @@ apiClient.interceptors.response.use(
       
       switch (status) {
         case 400:
-          error.message = `请求参数错误: ${detail}`
+          errorMessage = `请求参数错误: ${detail}`
           break
         case 404:
-          error.message = `资源不存在: ${detail}`
+          errorMessage = `资源不存在: ${detail}`
           break
         case 500:
-          error.message = `服务器错误: ${detail}`
+          errorMessage = `服务器错误: ${detail}`
           break
         default:
-          error.message = `请求失败 (${status}): ${detail}`
+          errorMessage = `请求失败 (${status}): ${detail}`
       }
+    } else {
+      errorMessage = error.message || '请求失败'
     }
     
-    console.error('API Error:', error)
+    // 设置友好的错误消息并显示Toast提示
+    error.friendlyMessage = errorMessage
+    console.error('API Error:', errorMessage)
+    toast.error(errorMessage)
+    
     return Promise.reject(error)
   }
 )

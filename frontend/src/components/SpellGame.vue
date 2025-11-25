@@ -1,5 +1,8 @@
 <template>
   <div class="spell-game-container min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+    <!-- Loading 状态 -->
+    <LoadingSpinner :loading="isLoading" message="加载单词中..." />
+    
     <!-- 游戏头部信息 -->
     <div v-if="gameStarted" class="game-header mb-8 flex justify-between items-center">
       <div class="stats flex gap-6">
@@ -428,7 +431,9 @@ import { useGameStore } from '@/stores/game'
 import { useSettingsStore } from '@/stores/settings'
 import api from '@/api'
 import tts from '@/utils/tts'
+import toast from '@/utils/toast'
 import { highlightDifferences } from '@/utils/stringDiff'
+import LoadingSpinner from './LoadingSpinner.vue'
 
 const gameStore = useGameStore()
 const settingsStore = useSettingsStore()
@@ -459,6 +464,7 @@ const isPlaying = ref(false)
 const autoPlayCount = ref(0) // 自动播放次数
 const playQueue = ref([]) // 播放队列
 const reviewCount = ref(0) // 待复习单词数量
+const isLoading = ref(false) // 加载状态
 
 // 计算属性
 const showCorrect = computed(() => showFeedback.value && lastResult.value?.correct)
@@ -510,19 +516,29 @@ async function autoPlayPronunciation() {
 }
 
 async function selectDifficulty(level) {
-  const success = await gameStore.startLearning(level)
-  if (!success) {
-    alert('加载单词失败，请检查词库是否有该难度的单词')
+  isLoading.value = true
+  try {
+    const success = await gameStore.startLearning(level)
+    if (!success) {
+      toast.error('加载单词失败，请检查词库是否有该难度的单词')
+    } else {
+      toast.success('单词加载成功！开始学习吧')
+    }
+  } catch (error) {
+    toast.error('加载失败：' + (error.message || '未知错误'))
+  } finally {
+    isLoading.value = false
   }
 }
 
 async function startReviewMode() {
+  isLoading.value = true
   try {
     // 调用新的复习模式API
     const words = await api.getReviewWords(settingsStore.wordsPerRound || 10)
     
     if (!words || words.length === 0) {
-      alert('暂无需要复习的单词！')
+      toast.warning('暂无需要复习的单词！')
       return
     }
     
@@ -535,10 +551,13 @@ async function startReviewMode() {
     gameStore.studiedWords.clear()
     gameStore.difficulty = 0 // 复习模式没有难度
     
+    toast.success(`加载了 ${words.length} 个待复习单词`)
     console.log(`[复习模式] 加载了 ${words.length} 个待复习单词`)
   } catch (error) {
     console.error('加载复习单词失败:', error)
-    alert('加载复习单词失败，请稍后重试')
+    toast.error('加载复习单词失败，请稍后重试')
+  } finally {
+    isLoading.value = false
   }
 }
 

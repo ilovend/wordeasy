@@ -90,11 +90,23 @@ async function loadCounts() {
   }
 }
 
-function startReview(mode) {
-  // 这里可以扩展为专门的复习游戏模式
-  // 目前简化为跳转到游戏页面
-  alert(`${mode === 'daily' ? '今日复习' : '错词歼灭战'}模式启动！`)
-  router.push('/game')
+async function startReview(mode) {
+  if (mode === 'errors') {
+    // 启动错词本模式
+    const { useGameStore } = await import('@/stores/game')
+    const gameStore = useGameStore()
+    const result = await gameStore.startErrorBook()
+    
+    if (result.success) {
+      router.push('/game')
+    } else {
+      alert(result.message || '错词本加载失败，请稍后重试')
+    }
+  } else {
+    // 今日复习模式（未来可扩展）
+    alert('今日复习模式启动！')
+    router.push('/game')
+  }
 }
 
 function startSpeedChallenge() {
