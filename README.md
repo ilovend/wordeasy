@@ -51,8 +51,14 @@ WordEasy 是一个轻量级的英语单词学习应用，通过游戏化的方�
 
 ### 🔄 复习模式
 - 今日待复习单词提醒
+- **错词本模式**：专门练习历史错误单词
 - 基于掌握程度的智能推送
-- 遗忘曲线算法优化
+- 遗忘曲线算法优化（1天→3天→7天→15天）
+
+### 🎯 用户体验增强
+- **Toast通知系统**：优雅的消息提示
+- **加载状态反馈**：LoadingSpinner组件
+- **友好的错误提示**：统一的错误处理
 
 ### 📚 词库管理
 - 内置400+分级单词
@@ -75,12 +81,17 @@ WordEasy 是一个轻量级的英语单词学习应用，通过游戏化的方�
 - **Tailwind CSS** - 实用优先的CSS框架
 - **Axios** - HTTP客户端
 - **Web Speech API** - 浏览器原生语音合成
+- **Vite优化** - 代码分割、压缩配置
+- **Toast组件** - 统一的消息通知系统
+- **Loading组件** - 加载状态反馈
 
 ### 后端
 - **FastAPI** - 现代化Python Web框架
 - **SQLAlchemy** - Python ORM
 - **SQLite** - 轻量级数据库
 - **Pydantic** - 数据验证
+- **缓存系统** - 内存缓存优化性能
+- **性能监控** - API调用性能追踪
 
 ### 开发工具
 - **Vite** - 前端构建工具
@@ -155,8 +166,11 @@ wordeasy/
 │   │   ├── models.py       # 数据库模型
 │   │   ├── schemas.py      # Pydantic模型
 │   │   ├── crud.py         # 数据库操作
+│   │   ├── cache.py        # 🆕 缓存系统
+│   │   ├── performance.py  # 🆕 性能监控
 │   │   ├── word_classifier.py  # 智能分类算法
 │   │   └── database.py     # 数据库连接
+│   ├── migrations/         # 🆕 数据库迁移脚本
 │   ├── data/
 │   │   └── wordeasy.db     # SQLite数据库
 │   └── requirements.txt    # Python依赖
@@ -165,12 +179,14 @@ wordeasy/
 │   │   ├── components/     # Vue组件
 │   │   │   ├── SpellGame.vue      # 主游戏组件
 │   │   │   ├── WordManager.vue    # 词库管理
+│   │   │   ├── LoadingSpinner.vue # 🆕 加载组件
 │   │   │   └── Settings.vue       # 设置页面
 │   │   ├── stores/         # Pinia状态管理
-│   │   │   ├── game.js     # 游戏状态
+│   │   │   ├── game.js     # 游戏状态（含错词本模式）
 │   │   │   └── settings.js # 设置状态
-│   │   ├── api/            # API封装
+│   │   ├── api/            # API封装（含错误处理）
 │   │   ├── utils/          # 工具函数
+│   │   │   └── toast.js    # 🆕 Toast通知系统
 │   │   └── router/         # 路由配置
 │   └── package.json        # 前端依赖
 ├── tools/                  # 工具脚本
@@ -239,10 +255,16 @@ CREATE TABLE words (
 CREATE TABLE progress (
     word_id INTEGER PRIMARY KEY,
     mastery_level INTEGER DEFAULT 0,  -- 0陌生/1熟悉/2掌握
-    next_review DATE,                 -- 下次复习日期
-    error_count INTEGER DEFAULT 0,    -- 错误次数
+    next_review DATE,                 -- 下次复习日期 (索引)
+    error_count INTEGER DEFAULT 0,    -- 错误次数 (索引)
+    last_reviewed DATE,               -- 🆕 最后复习日期
+    review_count INTEGER DEFAULT 0,   -- 🆕 复习次数
     FOREIGN KEY (word_id) REFERENCES words(id)
 );
+
+-- 性能优化索引
+CREATE INDEX ix_progress_next_review ON progress(next_review);
+CREATE INDEX ix_progress_error_count ON progress(error_count);
 ```
 
 ---
@@ -330,6 +352,18 @@ docker-compose up -d
 ---
 
 ## 📝 更新日志
+
+### v1.3.0 (2025-01-26) 🎉
+- ✨ **错词本模式**：专门练习历史错误单词
+- 🎨 **Toast通知系统**：优雅的消息提示（4种类型）
+- ⚡ **LoadingSpinner组件**：改善加载状态反馈
+- 📊 **性能监控工具**：API调用性能追踪
+- 🚀 **Vite构建优化**：代码分割和压缩配置
+- 💾 **后端缓存系统**：SimpleCache类和@cached装饰器
+- 🔍 **数据库索引优化**：next_review和error_count字段索引
+- 📈 **新增Progress字段**：last_reviewed和review_count
+- 🔧 **CI/CD修复**：升级GitHub Actions到v4/v5版本
+- 🎯 **错误处理增强**：统一的友好错误消息
 
 ### v1.2.0 (2025-01-25)
 - ✨ 新增复习模式和今日复习提醒
