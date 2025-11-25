@@ -12,7 +12,7 @@ sys.path.insert(0, str(project_root))
 
 from app.database import SessionLocal, engine
 from app.models import Base, Progress
-from sqlalchemy import inspect, Index
+from sqlalchemy import inspect, Index, text
 
 def check_index_exists(inspector, table_name, index_name):
     """检查索引是否存在"""
@@ -62,7 +62,9 @@ def add_new_columns():
         # 检查 last_reviewed 列
         if 'last_reviewed' not in columns:
             print("添加 last_reviewed 列...")
-            engine.execute('ALTER TABLE progress ADD COLUMN last_reviewed DATE')
+            with engine.connect() as conn:
+                conn.execute(text('ALTER TABLE progress ADD COLUMN last_reviewed DATE'))
+                conn.commit()
             print("✅ last_reviewed 列创建成功")
         else:
             print("ℹ️  last_reviewed 列已存在")
@@ -70,7 +72,9 @@ def add_new_columns():
         # 检查 review_count 列
         if 'review_count' not in columns:
             print("添加 review_count 列...")
-            engine.execute('ALTER TABLE progress ADD COLUMN review_count INTEGER DEFAULT 0')
+            with engine.connect() as conn:
+                conn.execute(text('ALTER TABLE progress ADD COLUMN review_count INTEGER DEFAULT 0'))
+                conn.commit()
             print("✅ review_count 列创建成功")
         else:
             print("ℹ️  review_count 列已存在")
