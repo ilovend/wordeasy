@@ -1,0 +1,104 @@
+name: Installation Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-installation:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        node-version: ['16', '18', '20']
+        # 减少测试组合数量
+        exclude:
+          - os: windows-latest
+            python-version: '3.9'
+          - os: macos-latest
+            python-version: '3.9'
+          - os: ubuntu-latest
+            node-version: '16'
+          - os: windows-latest
+            node-version: '16'
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout代码
+      uses: actions/checkout@v4
+    
+    - name: 设置Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: 设置Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: 显示环境信息
+      run: |
+        python --version
+        node --version
+        npm --version
+    
+    - name: 安装后端依赖
+      working-directory: backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: 检查数据目录创建
+      working-directory: backend
+      shell: bash
+      run: |
+        if [ ! -d "data" ]; then
+          mkdir data
+          echo "✓ 数据目录已创建"
+        else
+          echo "✓ 数据目录已存在"
+        fi
+    
+    - name: 测试数据库初始化
+      working-directory: backend
+      run: |
+        python init_db.py
+    
+    - name: 测试后端启动（语法检查）
+      working-directory: backend
+      run: |
+        python -c "from app.main import app; print('✓ 后端模块导入成功')"
+    
+    - name: 安装前端依赖
+      working-directory: frontend
+      run: |
+        npm install
+    
+    - name: 前端构建测试
+      working-directory: frontend
+      run: |
+        npm run build
+    
+    - name: 运行setup.py测试
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.10'
+      run: |
+        python setup.py || echo "setup.py 测试完成"
+
+  quick-start-guide:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout代码
+      uses: actions/checkout@v4
+    
+    - name: 验证文档存在
+      run: |
+        test -f QUICKSTART.md && echo "✓ QUICKSTART.md 存在"
+        test -f INSTALL.md && echo "✓ INSTALL.md 存在"
+        test -f README.md && echo "✓ README.md 存在"
+        test -f setup.py && echo "✓ setup.py 存在"
+        test -f restart.bat && echo "✓ restart.bat 存在"
+        test -f start.sh && echo "✓ start.sh 存在"

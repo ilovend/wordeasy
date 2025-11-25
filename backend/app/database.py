@@ -7,7 +7,14 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 # 数据库文件路径
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "wordeasy.db")
+DB_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+DB_PATH = os.path.join(DB_DIR, "wordeasy.db")
+
+# 确保数据目录存在（自动创建）
+if not os.path.exists(DB_DIR):
+    os.makedirs(DB_DIR)
+    print(f"✓ 已创建数据目录: {DB_DIR}")
+
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 # 创建数据库引擎

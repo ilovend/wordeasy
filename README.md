@@ -6,10 +6,12 @@
 ![Python](https://img.shields.io/badge/python-3.8+-green.svg)
 ![Vue](https://img.shields.io/badge/vue-3.3.8-brightgreen.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Setup Automated](https://img.shields.io/badge/setup-automated-success.svg)
 
 **一个基于科学记忆法的交互式英语单词拼写学习工具**
 
-[在线演示](https://your-demo-link.com) | [功能特性](#-功能特性) | [快速开始](#-快速开始) | [贡献指南](#-贡献指南)
+[📖 快速开始](QUICKSTART.md) | [🎯 功能特性](#-功能特性) | [💡 使用指南](#-使用指南) | [❓ 常见问题](docs/FAQ.md) | [🤝 贡献指南](CONTRIBUTING.md)
 
 <img src="docs/screenshot.png" alt="WordEasy Screenshot" width="800"/>
 
@@ -97,6 +99,92 @@ WordEasy 是一个轻量级的英语单词学习应用，通过游戏化的方�
 - **Vite** - 前端构建工具
 - **Uvicorn** - ASGI服务器
 - **PowerShell** - 自动化脚本
+
+---
+
+## 🚀 快速开始
+
+> **⚡ 3步快速启动，5分钟开始使用！**
+
+### 环境要求
+
+- **Python** 3.8+
+- **Node.js** 16+
+- **npm** 或 **yarn**
+
+### 🎯 一键安装（推荐）
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/ilovend/wordeasy.git
+cd wordeasy
+
+# 2. 运行安装脚本（自动检测环境、安装依赖、初始化数据库）
+python setup.py
+
+# 3. 启动项目
+# Windows 用户:
+restart.bat
+
+# macOS/Linux 用户:
+chmod +x start.sh
+./start.sh
+
+# 4. 在浏览器打开: http://localhost:5173
+```
+
+### 📝 手动安装
+
+<details>
+<summary>点击展开查看详细步骤</summary>
+
+**1. 克隆项目**
+```bash
+git clone https://github.com/ilovend/wordeasy.git
+cd wordeasy
+```
+
+**2. 后端安装**
+```bash
+cd backend
+
+# 创建数据目录（会自动创建，但可以手动创建）
+mkdir data
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 初始化数据库（可选，首次启动会自动创建）
+python init_db.py
+```
+
+**3. 前端安装**
+```bash
+cd frontend
+npm install
+# 或使用 yarn
+yarn install
+```
+
+**4. 启动应用**
+
+```bash
+# 终端1 - 启动后端（端口8000）
+cd backend
+python -m uvicorn app.main:app --reload
+
+# 终端2 - 启动前端（端口5173）
+cd frontend
+npm run dev
+```
+
+访问应用：**http://localhost:5173**
+
+</details>
+
+### 🆘 遇到问题？
+
+查看 [快速开始指南](QUICKSTART.md) 或 [安装文档](INSTALL.md)
 
 ---
 

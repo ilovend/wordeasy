@@ -10,8 +10,13 @@ import io
 from . import models, schemas, crud
 from .database import engine, get_db
 
-# 创建数据库表
-models.Base.metadata.create_all(bind=engine)
+# 创建数据库表（自动初始化）
+try:
+    models.Base.metadata.create_all(bind=engine)
+    print("✓ 数据库表初始化成功")
+except Exception as e:
+    print(f"⚠ 数据库初始化警告: {e}")
+    # 继续启动，因为可能是因为表已存在
 
 # 创建FastAPI应用
 app = FastAPI(

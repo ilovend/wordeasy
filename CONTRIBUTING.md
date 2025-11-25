@@ -4,6 +4,35 @@
 
 ## 🤝 如何贡献
 
+### 新手入门
+
+**第一次贡献？没问题！** 跟着这些步骤开始：
+
+1. **设置开发环境**
+   ```bash
+   # Fork 并克隆项目
+   git clone https://github.com/your-username/wordeasy.git
+   cd wordeasy
+   
+   # 运行自动安装脚本
+   python setup.py
+   
+   # 启动开发服务器
+   restart.bat  # Windows
+   # 或
+   ./start.sh   # macOS/Linux
+   ```
+
+2. **找到适合的任务**
+   - 查看标记为 `good first issue` 的 Issues
+   - 阅读代码，熟悉项目结构
+   - 在 Discussions 中提问
+
+3. **提交你的第一个PR**
+   - 从小改动开始（文档、注释、小bug修复）
+   - 遵循代码规范
+   - 详细描述你的更改
+
 ### 报告Bug
 
 如果你发现了bug，请：
