@@ -71,9 +71,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useGameStore } from '@/stores/game'
 import api from '@/api'
 
 const router = useRouter()
+const gameStore = useGameStore()
 const reviewCount = ref(0)
 const errorCount = ref(0)
 
@@ -93,8 +95,6 @@ async function loadCounts() {
 async function startReview(mode) {
   if (mode === 'errors') {
     // 启动错词本模式
-    const { useGameStore } = await import('@/stores/game')
-    const gameStore = useGameStore()
     const result = await gameStore.startErrorBook()
     
     if (result.success) {
