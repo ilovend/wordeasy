@@ -1,10 +1,43 @@
 <template>
   <div class="settings-page min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-8">
     <div class="max-w-3xl mx-auto">
-      <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">⚙️ 游戏设置</h1>
+      <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">{{ $t('settings.title') }}</h1>
+
+      <!-- 语言设置 -->
+      <div class="settings-card bg-white rounded-2xl shadow-xl p-8 mb-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🌐 {{ $t('settings.language.title') }}</h2>
+        
+        <div class="setting-item flex justify-between items-center">
+          <label class="text-lg font-semibold text-gray-700">{{ $t('settings.language.select') }}</label>
+          <div class="flex gap-3">
+            <button
+              @click="changeLanguage('zh')"
+              :class="[
+                'px-6 py-2 rounded-full font-bold transition',
+                locale === 'zh'
+                  ? 'bg-indigo-500 text-white'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              ]"
+            >
+              🇨🇳 中文
+            </button>
+            <button
+              @click="changeLanguage('en')"
+              :class="[
+                'px-6 py-2 rounded-full font-bold transition',
+                locale === 'en'
+                  ? 'bg-indigo-500 text-white'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              ]"
+            >
+              🇬🇧 English
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div class="settings-card bg-white rounded-2xl shadow-xl p-8 mb-6">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">🎮 游戏参数</h2>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ $t('settings.gameParams') }}</h2>
 
         <!-- 生命值设置 -->
         <div class="setting-item mb-6">
@@ -164,10 +197,21 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/stores/settings'
 
+const { locale, t } = useI18n()
 const settingsStore = useSettingsStore()
 const showSaveSuccess = ref(false)
+
+function changeLanguage(lang) {
+  locale.value = lang
+  localStorage.setItem('wordeasy_locale', lang)
+  showSaveSuccess.value = true
+  setTimeout(() => {
+    showSaveSuccess.value = false
+  }, 2000)
+}
 
 function saveSettings() {
   settingsStore.saveSettings()
@@ -178,7 +222,7 @@ function saveSettings() {
 }
 
 function resetSettings() {
-  if (confirm('确定要恢复默认设置吗？')) {
+  if (confirm(t('settings.confirm.reset'))) {
     settingsStore.resetSettings()
     showSaveSuccess.value = true
     setTimeout(() => {

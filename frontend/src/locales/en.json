@@ -1,0 +1,318 @@
+{
+  "app": {
+    "title": "WordEasy",
+    "subtitle": "Spelling Battle",
+    "description": "Master English spelling through gamification"
+  },
+  "common": {
+    "back": "Back",
+    "backToHome": "Back to Home",
+    "exit": "Exit",
+    "submit": "Submit Answer",
+    "next": "Next",
+    "prev": "Previous",
+    "skip": "Skip",
+    "start": "Start",
+    "restart": "Restart",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "nav": {
+    "home": "Home",
+    "game": "Start Game",
+    "speed": "Speed Challenge",
+    "review": "Review Mode",
+    "library": "Word Library",
+    "settings": "Settings"
+  },
+  "home": {
+    "welcome": "📖✨",
+    "title": "WordEasy",
+    "subtitle": "Spelling Battle",
+    "description": "Master English spelling through gamification",
+    "myProgress": "🎯 My Progress",
+    "currentLevel": "Level",
+    "coins": "Coins",
+    "masteredWords": "Mastered",
+    "masteryDistribution": "Mastery Distribution",
+    "unfamiliar": "Unfamiliar",
+    "familiar": "Familiar",
+    "mastered": "Mastered",
+    "features": {
+      "game": {
+        "title": "Start Game",
+        "desc": "Challenge spelling battles and earn points"
+      },
+      "speed": {
+        "title": "Speed Challenge",
+        "desc": "60-second extreme challenge"
+      },
+      "review": {
+        "title": "Review Mode",
+        "desc": "Smart review plan to consolidate learned words"
+      },
+      "library": {
+        "title": "Word Library",
+        "desc": "View library and upload custom words"
+      }
+    },
+    "tips": {
+      "algorithm": "💡 Based on scientific forgetting curve algorithm to help you memorize efficiently",
+      "daily": "🎯 Practice daily to easily improve your vocabulary"
+    }
+  },
+  "game": {
+    "title": "🎮 Spelling Battle",
+    "selectDifficulty": "Select difficulty to start learning, challenge after mastering words!",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "easyDesc": "3-5 letter short words",
+      "mediumDesc": "6-8 letter exam words",
+      "hardDesc": "Long words, confusing words",
+      "easyTip": "Suitable for beginners",
+      "mediumTip": "Improve vocabulary",
+      "hardTip": "Challenge spelling master"
+    },
+    "stats": {
+      "lives": "❤️ Lives:",
+      "score": "⭐ Score:",
+      "time": "⏰ Time:",
+      "progress": "📝 Progress:"
+    },
+    "learning": {
+      "title": "📚 Learning Mode",
+      "exit": "← Exit",
+      "currentProgress": "Current: #{current} | Studied: {studied} / {total}",
+      "shortcuts": "⌨️ Shortcuts:",
+      "markStudied": "Mark as Studied (Space)",
+      "marked": "Marked as Studied",
+      "pronunciation": "Listen to Pronunciation (2x)",
+      "playing": "Playing...",
+      "tips": {
+        "title": "💡 Learning Tips",
+        "observe": "✓ Carefully observe the spelling",
+        "listen": "✓ Listen and repeat several times",
+        "associate": "✓ Associate with definition",
+        "spell": "✓ Spell in your mind"
+      },
+      "actions": {
+        "prev": "Previous",
+        "next": "Next",
+        "lastOne": "Last One",
+        "startChallenge": "All Done, Start Challenge!",
+        "directChallenge": "Challenge Now (Recommend studying {total} words)"
+      },
+      "progressLabel": "Learning Progress"
+    },
+    "playing": {
+      "inputPlaceholder": "Enter English spelling...",
+      "submitAnswer": "Submit Answer",
+      "resubmit": "Resubmit",
+      "nextWord": "Next → (Enter)",
+      "correct": "Correct! Well done!",
+      "incorrect": "Incorrect spelling, please re-enter the correct spelling",
+      "hint": "Hint:",
+      "yourInput": "Your input:",
+      "diffLegend": {
+        "correct": "● Correct",
+        "error": "● Error",
+        "missing": "● Missing"
+      },
+      "loseLife": "-1 Life",
+      "gainPoints": "+10 Points",
+      "retryHint": "👇 Clear input and spell correctly to continue",
+      "continueHint": "Press Enter or click button to continue",
+      "monsterProgress": "Monster Progress",
+      "category": "Category:",
+      "difficulty": "Difficulty:",
+      "listenPronunciation": "Pronunciation",
+      "exitChallenge": "🚪 Exit Challenge"
+    },
+    "review": {
+      "title": "📅 Today's Review",
+      "count": "{count} words need review",
+      "startReview": "🔄 Start Review"
+    },
+    "result": {
+      "success": "🎉 Challenge Completed!",
+      "fail": "💔 Challenge Failed",
+      "failMessage": "Don't give up, keep going!",
+      "badge": "🏆 Spelling Master",
+      "totalScore": "Total Score",
+      "correctCount": "Correct",
+      "accuracy": "Accuracy",
+      "backToLearning": "📚 Back to Learning",
+      "restart": "🔄 Restart Challenge",
+      "selectDifficulty": "🏠 Select Difficulty"
+    },
+    "confirm": {
+      "exitLearning": "Are you sure you want to exit learning mode?",
+      "exitChallenge": "Are you sure you want to exit the challenge? Current progress will not be saved.",
+      "directChallenge": "You have only studied {studied}/{total} words. Are you sure you want to start the challenge?"
+    }
+  },
+  "speed": {
+    "title": "⚡ Speed Challenge",
+    "description": "Challenge yourself! 10 words, 60-second countdown, see how many you can get right!",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "startChallenge": "🚀 Start Challenge",
+    "bestRecord": "Best Record",
+    "playing": {
+      "timeLeft": "⏱️ {time}s",
+      "correct": "✅ {count} / {current}",
+      "progress": "Progress: {current} / {total}",
+      "inputPlaceholder": "Quick input...",
+      "submit": "Submit",
+      "skip": "Skip",
+      "listening": "Playing...",
+      "listenPronunciation": "Pronunciation",
+      "feedback": {
+        "correct": "✅ Correct!",
+        "incorrect": "❌ Answer: {answer}",
+        "skipped": "⏭️ Skipped"
+      }
+    },
+    "result": {
+      "title": "Challenge Complete!",
+      "score": "{correct} / 10",
+      "accuracy": "Accuracy: {percent}%",
+      "timeUsed": "Time Used: {time}s",
+      "newRecord": "🎉 New Record!",
+      "restart": "🔄 Try Again",
+      "backToHome": "🏠 Back to Home",
+      "emoji": {
+        "excellent": "🏆",
+        "good": "👍",
+        "needPractice": "💪"
+      }
+    }
+  },
+  "review": {
+    "title": "📚 Smart Review",
+    "plan": {
+      "title": "📅 Review Plan",
+      "description": "Based on forgetting curve algorithm, the system intelligently pushes words for review:",
+      "unfamiliar": "🔴 Unfamiliar: Review 3 times today (1h/3h/6h intervals)",
+      "familiar": "🟡 Familiar: Review once tomorrow, then 3/7/15 day intervals",
+      "mastered": "🟢 Mastered: Random check once a week"
+    },
+    "modes": {
+      "daily": {
+        "title": "Daily Review",
+        "desc": "Review today's words",
+        "count": "Words to Review"
+      },
+      "errors": {
+        "title": "Error Elimination",
+        "desc": "Focus on historical errors",
+        "count": "Error Count"
+      },
+      "speed": {
+        "title": "⚡ Speed Challenge",
+        "desc": "10 words, 60 seconds, challenge your spelling speed!",
+        "start": "Start Speed Challenge"
+      }
+    }
+  },
+  "library": {
+    "title": "📚 Word Library",
+    "upload": {
+      "title": "📤 Upload Custom Library",
+      "description": "Supports TXT files, one word per line, format: English|Chinese (e.g., abandon|give up)",
+      "selectFile": "Click to select TXT file",
+      "dragDrop": "or drag and drop file here",
+      "startUpload": "Start Upload",
+      "uploading": "Uploading...",
+      "success": "Upload successful",
+      "failed": "Upload failed"
+    },
+    "stats": {
+      "title": "📊 Library Statistics",
+      "easy": "Easy Words",
+      "medium": "Medium Words",
+      "hard": "Hard Words",
+      "total": "Total Words",
+      "clearAll": "🗑️ Clear All",
+      "clearing": "Clearing...",
+      "reclassify": "🔀 Auto Classify",
+      "reclassifying": "Classifying...",
+      "functionsDesc": "💡 Functions:",
+      "clearDesc": "🗑️Clear All = Delete all word data",
+      "reclassifyDesc": "🔀Auto Classify = Automatic difficulty classification"
+    },
+    "errors": {
+      "title": "❌ Error Book",
+      "description": "Historical spelling errors for focused review",
+      "load": "Load Error Book",
+      "loading": "Loading...",
+      "clearProgress": "🧹 Clear Progress",
+      "clearing": "Clearing...",
+      "empty": "No errors yet, keep it up!",
+      "errorCount": "Error {count} times"
+    },
+    "review": {
+      "title": "📅 Today's Review",
+      "description": "Smart review based on forgetting curve",
+      "load": "View Review Words",
+      "loading": "Loading...",
+      "empty": "No words to review today. You've completed all reviews!"
+    },
+    "confirm": {
+      "clearAll": "⚠️ Warning: This will delete all word data and cannot be undone!\n\nAre you sure you want to clear the library?",
+      "clearAllConfirm": "Confirm again: Really delete all word data?",
+      "clearProgress": "⚠️ Are you sure you want to clear all learning progress?\n\nThis will reset:\n1. All word learning records\n2. Error book content\n3. Mastery levels\n\nThis cannot be undone!",
+      "reclassify": "Are you sure you want to reclassify all custom words? The system will automatically determine difficulty levels based on word length and affixes."
+    }
+  },
+  "settings": {
+    "title": "⚙️ Game Settings",
+    "language": {
+      "title": "Language Settings",
+      "select": "Select Language"
+    },
+    "gameParams": "🎮 Game Parameters",
+    "initialLives": "❤️ Initial Lives",
+    "timeLimit": "⏰ Time Limit (seconds)",
+    "wordsPerRound": "📝 Words Per Round",
+    "pointsPerCorrect": "⭐ Points Per Correct",
+    "difficultyLabels": {
+      "hard": "Hard",
+      "normal": "Normal",
+      "easy": "Easy",
+      "fast": "Fast",
+      "standard": "Standard",
+      "relaxed": "Relaxed",
+      "training": "Training"
+    },
+    "sound": {
+      "title": "🔊 Sound Settings",
+      "enable": "Enable Sound",
+      "autoPlay": "Auto-play Pronunciation",
+      "autoPlayDesc": "Automatically play when new word appears",
+      "on": "✓ On",
+      "off": "✗ Off"
+    },
+    "actions": {
+      "save": "✓ Save Settings",
+      "reset": "🔄 Reset to Default",
+      "back": "← Back to Home",
+      "saved": "✓ Settings Saved"
+    },
+    "confirm": {
+      "reset": "Are you sure you want to reset to default settings?"
+    }
+  }
+}
