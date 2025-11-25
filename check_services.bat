@@ -1,28 +1,28 @@
 @echo off
 chcp 65001 > nul
 echo ====================================
-echo WordEasy 服务诊断
+echo WordEasy Service Diagnostics
 echo ====================================
 echo.
 
-echo [检查端口占用]
-echo 8000端口（后端）:
+echo [Checking Port Usage]
+echo Port 8000 (Backend):
 netstat -ano | findstr ":8000"
 echo.
-echo 5173端口（前端）:
+echo Port 5173 (Frontend):
 netstat -ano | findstr ":5173"
 echo.
 
-echo [测试后端API]
+echo [Testing Backend API]
 curl -s http://localhost:8000/api/progress
 echo.
 echo.
 
-echo [后端进程]
+echo [Backend Processes]
 tasklist | findstr python.exe
 echo.
 
-echo [前端进程]
+echo [Frontend Processes]
 tasklist | findstr node.exe
 echo.
 
