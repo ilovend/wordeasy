@@ -8,7 +8,6 @@ venv/
 env/
 ENV/
 *.egg-info/
-dist/
 build/
 
 # Node
@@ -17,13 +16,18 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-dist/
 .DS_Store
+
+# Build outputs
+dist/
+frontend/dist/
+backend/dist/
 
 # Database
 *.db
 *.sqlite
 *.sqlite3
+backend/data/*.db
 
 # IDE
 .vscode/
@@ -44,3 +48,8 @@ logs/
 .env
 .env.local
 .env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+~*
