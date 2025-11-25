@@ -194,7 +194,7 @@ def test_get_word_by_id(db_session):
 
 - 📖 查看 [文档](README.md)
 - 💬 在 [Discussions](https://github.com/yourusername/wordeasy/discussions) 提问
-- 📧 发送邮件至 your.email@example.com
+- 📧 发送邮件至 ilovendme@outlook.com
 
 ## 🎉 贡献者
 
