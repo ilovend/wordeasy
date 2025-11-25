@@ -412,7 +412,7 @@ docker-compose up -d
 
 - 项目主页: [https://github.com/yourusername/wordeasy](https://github.com/yourusername/wordeasy)
 - Issue追踪: [https://github.com/yourusername/wordeasy/issues](https://github.com/yourusername/wordeasy/issues)
-- 邮箱: your.email@example.com
+- 邮箱: ilovendme@outlook.com
 
 ---
 
