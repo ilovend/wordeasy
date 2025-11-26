@@ -2,7 +2,7 @@
 Pydantic模型定义（API输入输出）
 """
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import date
 
 class WordBase(BaseModel):
@@ -48,4 +48,4 @@ class MarkStudiedRequest(BaseModel):
     word_id: int
 
 class BatchUpdateRequest(BaseModel):
-    word_ids: list[int]
+    word_ids: List[int]
