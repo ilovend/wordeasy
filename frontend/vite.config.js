@@ -35,10 +35,16 @@ export default defineConfig({
         }
       }
     },
-    reportCompressedSize: true,
+    reportCompressedSize: false,
     chunkSizeWarningLimit: 1000
   },
   optimizeDeps: {
     include: ['vue', 'vue-router', 'pinia', 'axios']
+  },
+  // 修复 CI 环境中的构建问题
+  esbuild: {
+    supported: {
+      'top-level-await': true
+    }
   }
 })
