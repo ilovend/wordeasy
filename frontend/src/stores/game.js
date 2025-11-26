@@ -52,8 +52,6 @@ export const useGameStore = defineStore('game', () => {
       difficulty.value = selectedDifficulty
       const words = await api.getWords(selectedDifficulty, settingsStore.wordsPerRound)
       
-      console.log(`[DEBUG] 请求 ${settingsStore.wordsPerRound} 个单词，实际收到 ${words.length} 个单词`)
-      
       if (!words || words.length === 0) {
         throw new Error(`难度${selectedDifficulty}没有可用的单词，请先上传词库`)
       }

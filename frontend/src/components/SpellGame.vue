@@ -611,6 +611,22 @@ function handleKeyPress(event) {
     return
   }
   
+  // 挑战模式下的快捷键
+  if (gameStarted.value && !learningMode.value) {
+    if (key === 'enter') {
+      event.preventDefault()
+      // 如果显示反馈且答对了，进入下一题
+      if (showFeedback.value && lastResult.value?.correct) {
+        goNextWord()
+      } else if (!showFeedback.value || !lastResult.value?.correct) {
+        // 否则提交答案
+        submitSpelling()
+      }
+    }
+    return
+  }
+  
+  // 学习模式下的快捷键
   if (!learningMode.value) return
   
   if (key === 'arrowright' || key === 'd') {
@@ -666,26 +682,48 @@ function exitChallenge() {
   if (!confirmed) return
   
   stopTimer()
-  // 退出到学习模式
-  gameStore.startChallenge() // 先设置为challenge模式
-  gameStore.resetGame() // 然后重置
-  gameStore.startLearning(gameStore.difficulty) // 重新启动学习模式
+  
+  // 检查难度是否有效（复习模式/错词本模式的difficulty为0）
+  if (gameStore.difficulty >= 1 && gameStore.difficulty <= 3) {
+    // 退出到学习模式
+    gameStore.startChallenge() // 先设置为challenge模式
+    gameStore.resetGame() // 然后重置
+    gameStore.startLearning(gameStore.difficulty) // 重新启动学习模式
+  } else {
+    // 难度无效，返回主页
+    gameStore.resetGame()
+    toast.info('已返回主页')
+  }
 }
 
 function backToLearning() {
   // 从游戏结束界面返回学习模式
   stopTimer()
   gameStore.resetGame()
-  gameStore.startLearning(gameStore.difficulty)
+  
+  // 检查难度是否有效（复习模式/错词本模式的difficulty为0）
+  if (gameStore.difficulty >= 1 && gameStore.difficulty <= 3) {
+    gameStore.startLearning(gameStore.difficulty)
+  } else {
+    // 难度无效，返回主页选择难度
+    toast.warning('请重新选择难度')
+  }
 }
 
 function restartChallenge() {
   // 重新开始挑战（使用相同难度）
   stopTimer()
   gameStore.resetGame()
-  gameStore.startLearning(gameStore.difficulty).then(() => {
-    startChallengeMode()
-  })
+  
+  // 检查难度是否有效（复习模式/错词本模式的difficulty为0）
+  if (gameStore.difficulty >= 1 && gameStore.difficulty <= 3) {
+    gameStore.startLearning(gameStore.difficulty).then(() => {
+      startChallengeMode()
+    })
+  } else {
+    // 难度无效，返回主页选择难度
+    toast.warning('请重新选择难度')
+  }
 }
 
 function backToHome() {
@@ -722,6 +760,13 @@ async function submitSpelling() {
             playPronunciation(1)
           }, 300)
         }
+        // 自动聚焦到输入框
+        setTimeout(() => {
+          const inputElement = document.querySelector('input[type="text"]')
+          if (inputElement) {
+            inputElement.focus()
+          }
+        }, 100)
       }
       return
     } else {
@@ -746,6 +791,13 @@ async function submitSpelling() {
         // 答错了,保存错误输入用于差异显示,然后清空输入框
         lastWrongInput.value = userInput.value
         userInput.value = ''
+        // 自动聚焦到输入框，方便用户立即重新输入
+        setTimeout(() => {
+          const inputElement = document.querySelector('input[type="text"]')
+          if (inputElement) {
+            inputElement.focus()
+          }
+        }, 100)
       }
 
       // 检查游戏是否结束
@@ -773,6 +825,13 @@ function goNextWord() {
         playPronunciation(1)
       }, 300)
     }
+    // 自动聚焦到输入框
+    setTimeout(() => {
+      const inputElement = document.querySelector('input[type="text"]')
+      if (inputElement) {
+        inputElement.focus()
+      }
+    }, 100)
   }
 }
 

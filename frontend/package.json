@@ -1,6 +1,6 @@
 {
   "name": "wordeasy-frontend",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "WordEasy 拼写攻防战 - 前端应用",
   "scripts": {
     "dev": "vite",

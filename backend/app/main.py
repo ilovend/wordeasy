@@ -16,13 +16,13 @@ try:
     print("✓ 数据库表初始化成功")
 except Exception as e:
     print(f"⚠ 数据库初始化警告: {e}")
-    # 继续启动，因为可能是因为表已存在
+    # 继续启动，因为表可能已存在
 
 # 创建FastAPI应用
 app = FastAPI(
     title="WordEasy API",
     description="拼写攻防战 - 英语单词学习API",
-    version="1.0.0"
+    version="1.4.0"
 )
 
 # CORS配置（允许前端访问）
@@ -37,7 +37,7 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     """根路径"""
-    return {"message": "Welcome to WordEasy API", "version": "1.0.0"}
+    return {"message": "Welcome to WordEasy API", "version": "1.4.0"}
 
 def _build_word_response(word: models.Word, db: Session) -> schemas.WordResponse:
     """构建单词响应对象（内部辅助函数）"""
