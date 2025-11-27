@@ -1,23 +1,50 @@
 """
 SQLAlchemy数据库模型
 """
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, CheckConstraint
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, CheckConstraint, Boolean
 from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import date
+
+class Deck(Base):
+    """词库（卡组）表"""
+    __tablename__ = "decks"
+    
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String, unique=True, nullable=False)
+    description = Column(String, nullable=True)
+    daily_new_limit = Column(Integer, default=100)
+    new_batch_size = Column(Integer, default=30)
+    target_language = Column(String, default="英语")
+    voice_type = Column(String, default="默认")
+    deck_type = Column(String, default="单词库")
+    algorithm = Column(String, default="FSRS")
+    new_priority = Column(String, default="默认")
+    review_priority = Column(String, default="默认")
+    duplicate_filter = Column(String, default="过滤")
+    total_words = Column(Integer, default=0)
+    learned_words = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(Date, default=date.today)
+    
+    # 关系
+    words = relationship("Word", back_populates="deck")
 
 class Word(Base):
     """单词表"""
     __tablename__ = "words"
     
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    word = Column(String, unique=True, nullable=False, index=True)
+    word = Column(String, nullable=False, index=True)
     zh_definition = Column(String, nullable=False)
     difficulty = Column(Integer, CheckConstraint('difficulty BETWEEN 1 AND 3'), nullable=False)
     category = Column(String, nullable=True)
     audio_url = Column(String, nullable=True)
+    deck_id = Column(Integer, ForeignKey("decks.id"), nullable=False, default=1, index=True)
+    created_at = Column(Date, default=date.today)
     
     # 关系
+    deck = relationship("Deck", back_populates="words")
     progress = relationship("Progress", back_populates="word", uselist=False)
 
 class Progress(Base):

@@ -299,15 +299,19 @@ def get_review_count(db: Session = Depends(get_db)):
     }
 
 @app.post("/api/words/upload", response_model=schemas.UploadResponse)
-async def upload_words(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def upload_words(file: UploadFile = File(...), deck_id: int = 1, db: Session = Depends(get_db)):
     """
     上传自定义词库TXT文件
     格式：每行一个单词，用|分隔英文和中文，如 "abandon|放弃"
     支持智能难度分类
+    
+    参数:
+    - file: 上传的TXT文件
+    - deck_id: 目标词库ID（默认为1，即默认词库）
     """
     # 验证文件类型
-    if not file.filename.endswith('.txt'):
-        raise HTTPException(status_code=400, detail="仅支持TXT文件")
+    if not file.filename.endswith('.txt') and not file.filename.endswith('.csv') and not file.filename.endswith('.json'):
+        raise HTTPException(status_code=400, detail="仅支持TXT、CSV、JSON文件")
     
     try:
         from .word_classifier import classify_word_difficulty
@@ -358,11 +362,12 @@ async def upload_words(file: UploadFile = File(...), db: Session = Depends(get_d
                 message=f"文件中没有有效的单词（共{len(lines)}行，{invalid_lines}行无效）"
             )
         
-        # 批量查询已存在的单词（优化：一次查询）
+        # 批量查询已存在的单词（在同一词库中优化：一次查询）
         word_texts = [w[0] for w in words_to_add]
         existing_words = set(
             w[0] for w in db.query(models.Word.word).filter(
-                models.Word.word.in_(word_texts)
+                models.Word.word.in_(word_texts),
+                models.Word.deck_id == deck_id
             ).all()
         )
         
@@ -383,7 +388,8 @@ async def upload_words(file: UploadFile = File(...), db: Session = Depends(get_d
                 word=word_text,
                 zh_definition=zh_def,
                 difficulty=difficulty,
-                category="自定义"
+                category="自定义",
+                deck_id=deck_id
             ))
         
         # 批量插入

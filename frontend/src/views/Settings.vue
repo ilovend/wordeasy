@@ -161,6 +161,39 @@
         </div>
       </div>
 
+      <!-- 主题设置 -->
+      <div class="settings-card bg-white rounded-2xl shadow-xl p-8 mb-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🎨 主题设置</h2>
+
+        <div class="setting-item flex justify-between items-center">
+          <label class="text-lg font-semibold text-gray-700">选择主题</label>
+          <div class="flex gap-3">
+            <button
+              @click="changeTheme('light')"
+              :class="[
+                'px-6 py-2 rounded-full font-bold transition',
+                settingsStore.theme === 'light'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              ]"
+            >
+              ☀️ 浅色
+            </button>
+            <button
+              @click="changeTheme('dark')"
+              :class="[
+                'px-6 py-2 rounded-full font-bold transition',
+                settingsStore.theme === 'dark'
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              ]"
+            >
+              🌙 深色
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- 按钮组 -->
       <div class="flex gap-4 mb-8">
         <button
@@ -233,6 +266,16 @@ function resetSettings() {
 
 function goBack() {
   window.location.href = '/'
+}
+
+function changeTheme(newTheme) {
+  settingsStore.theme = newTheme
+  settingsStore.applyTheme()
+  settingsStore.saveSettings()
+  showSaveSuccess.value = true
+  setTimeout(() => {
+    showSaveSuccess.value = false
+  }, 2000)
 }
 </script>
 

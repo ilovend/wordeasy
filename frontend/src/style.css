@@ -11,6 +11,51 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 暗黑模式基础样式 */
+.dark {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.dark .settings-card,
+.dark .stat-card,
+.dark .mastery-item {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+.dark .settings-card h2,
+.dark .stat-card h3,
+.dark .mastery-item h3 {
+  color: #f3f4f6;
+}
+
+.dark .settings-card p,
+.dark .stat-card p,
+.dark .mastery-item p {
+  color: #d1d5db;
+}
+
+.dark input[type="range"] {
+  background-color: #4b5563;
+}
+
+.dark input[type="range"]::-webkit-slider-thumb {
+  background-color: #3b82f6;
+}
+
+.dark input[type="range"]::-moz-range-thumb {
+  background-color: #3b82f6;
+}
+
+.dark .home-container {
+  background: linear-gradient(to-br, #1f2937, #374151);
+}
+
+.dark .statistics-page {
+  background: linear-gradient(to-br, #1f2937, #374151);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

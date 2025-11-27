@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore('settings', () => {
   const pointsPerCorrect = ref(10) // 每题得分
   const enableSound = ref(true) // 是否启用音效
   const autoPlayAudio = ref(false) // 是否自动播放发音
+  const theme = ref('light') // 主题：light 或 dark
 
   // 从localStorage加载设置
   function loadSettings() {
@@ -25,10 +26,13 @@ export const useSettingsStore = defineStore('settings', () => {
         pointsPerCorrect.value = settings.pointsPerCorrect || 10
         enableSound.value = settings.enableSound !== false
         autoPlayAudio.value = settings.autoPlayAudio || false
+        theme.value = settings.theme || 'light'
       } catch (e) {
         console.error('加载设置失败:', e)
       }
     }
+    // 应用主题
+    applyTheme()
   }
 
   // 保存设置到localStorage
@@ -39,7 +43,8 @@ export const useSettingsStore = defineStore('settings', () => {
       wordsPerRound: wordsPerRound.value,
       pointsPerCorrect: pointsPerCorrect.value,
       enableSound: enableSound.value,
-      autoPlayAudio: autoPlayAudio.value
+      autoPlayAudio: autoPlayAudio.value,
+      theme: theme.value
     }
     localStorage.setItem('game_settings', JSON.stringify(settings))
   }
@@ -52,7 +57,18 @@ export const useSettingsStore = defineStore('settings', () => {
     pointsPerCorrect.value = 10
     enableSound.value = true
     autoPlayAudio.value = false
+    theme.value = 'light'
     saveSettings()
+    applyTheme()
+  }
+
+  // 应用主题
+  function applyTheme() {
+    if (theme.value === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
   }
 
   // 初始化时加载设置
@@ -65,8 +81,10 @@ export const useSettingsStore = defineStore('settings', () => {
     pointsPerCorrect,
     enableSound,
     autoPlayAudio,
+    theme,
     loadSettings,
     saveSettings,
-    resetSettings
+    resetSettings,
+    applyTheme
   }
 })

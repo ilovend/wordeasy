@@ -60,7 +60,11 @@
       },
       "library": {
         "title": "Word Library",
-        "desc": "View library and upload custom words"
+        "desc": "View and upload custom words"
+      },
+      "statistics": {
+        "title": "Learning Stats",
+        "desc": "View learning progress and statistics"
       }
     },
     "tips": {
@@ -313,6 +317,42 @@
     },
     "confirm": {
       "reset": "Are you sure you want to reset to default settings?"
+    }
+  },
+  "statistics": {
+    "title": "📊 Learning Statistics",
+    "level": {
+      "title": "Learning Level"
+    },
+    "coins": {
+      "title": "Coins"
+    },
+    "totalWords": {
+      "title": "Total Words"
+    },
+    "reviewedWords": {
+      "title": "Reviewed Words"
+    },
+    "mastery": {
+      "title": "Mastery Statistics",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "recent": {
+      "title": "Last 7 Days Learning Trend",
+      "reviewed": "Reviewed Words"
+    },
+    "difficulty": {
+      "title": "Difficulty Distribution",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "label": "Word Count"
+    },
+    "errorRate": {
+      "title": "Error Rate Statistics",
+      "label": "Error Rate"
     }
   }
 }

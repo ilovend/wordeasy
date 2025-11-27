@@ -5,6 +5,7 @@ import WordLibrary from '@/views/WordLibrary.vue'
 import Review from '@/views/Review.vue'
 import SpeedChallenge from '@/views/SpeedChallenge.vue'
 import Settings from '@/views/Settings.vue'
+import Statistics from '@/views/Statistics.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings
+  },
+  {
+    path: '/statistics',
+    name: 'Statistics',
+    component: Statistics
   }
 ]
 

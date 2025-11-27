@@ -61,6 +61,10 @@
       "library": {
         "title": "词库管理",
         "desc": "查看词库、上传自定义单词"
+      },
+      "statistics": {
+        "title": "学习统计",
+        "desc": "查看学习进度和统计数据"
       }
     },
     "tips": {
@@ -313,6 +317,42 @@
     },
     "confirm": {
       "reset": "确定要恢复默认设置吗？"
+    }
+  },
+  "statistics": {
+    "title": "📊 学习统计",
+    "level": {
+      "title": "学习等级"
+    },
+    "coins": {
+      "title": "金币数量"
+    },
+    "totalWords": {
+      "title": "总单词数"
+    },
+    "reviewedWords": {
+      "title": "已复习单词"
+    },
+    "mastery": {
+      "title": "掌握度统计",
+      "beginner": "初级",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "recent": {
+      "title": "最近7天学习趋势",
+      "reviewed": "复习单词数"
+    },
+    "difficulty": {
+      "title": "难度分布",
+      "beginner": "初级",
+      "intermediate": "中级",
+      "advanced": "高级",
+      "label": "单词数量"
+    },
+    "errorRate": {
+      "title": "错误率统计",
+      "label": "错误率"
     }
   }
 }

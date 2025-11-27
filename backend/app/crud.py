@@ -61,6 +61,10 @@ def update_progress(db: Session, word_id: int, is_correct: bool) -> models.Progr
     """
     progress = get_or_create_progress(db, word_id)
     
+    # 更新复习计数和最后复习日期
+    progress.review_count += 1
+    progress.last_reviewed = date.today()
+    
     if is_correct:
         # 正确：提升掌握度并延长复习间隔
         if progress.mastery_level < 2:
@@ -110,6 +114,7 @@ def get_error_words(db: Session, limit: int = 20) -> List[models.Word]:
 
 def get_progress_stats(db: Session) -> dict:
     """获取学习进度统计"""
+    # 1. 掌握度统计
     mastery_counts = db.query(
         models.Progress.mastery_level, 
         func.count(models.Progress.word_id)
@@ -118,13 +123,49 @@ def get_progress_stats(db: Session) -> dict:
     mastery_map = {0: "红", 1: "黄", 2: "绿"}
     mastery = {mastery_map.get(level, "红"): count for level, count in mastery_counts}
     
-    # 计算等级和积分（简单算法：掌握单词数 * 10）
+    # 2. 计算等级和积分（简单算法：掌握单词数 * 10）
     total_mastered = mastery.get("绿", 0)
     coins = total_mastered * 10
     level = min(total_mastered // 10 + 1, 99)  # 每10个掌握单词升1级
     
+    # 3. 按难度的单词分布
+    difficulty_counts = db.query(
+        models.Word.difficulty, 
+        func.count(models.Word.id)
+    ).group_by(models.Word.difficulty).all()
+    difficulty_distribution = {f"level{diff}": count for diff, count in difficulty_counts}
+    
+    # 4. 学习进度统计
+    total_words = db.query(models.Word).count()
+    reviewed_words = db.query(models.Progress).filter(models.Progress.review_count > 0).count()
+    error_words = db.query(models.Progress).filter(models.Progress.error_count > 0).count()
+    
+    # 5. 最近7天的学习数据
+    recent_stats = []
+    for i in range(7):
+        day = date.today() - timedelta(days=i)
+        # 统计当天复习的单词数
+        reviewed_today = db.query(models.Progress).filter(
+            func.date(models.Progress.last_reviewed) == day
+        ).count()
+        
+        recent_stats.append({
+            "date": day.strftime("%m-%d"),
+            "reviewed": reviewed_today
+        })
+    
+    # 6. 错误率统计
+    total_progress = db.query(models.Progress).count()
+    error_rate = round((error_words / total_progress) * 100, 2) if total_progress > 0 else 0
+    
     return {
         "level": level,
         "coins": coins,
-        "mastery": mastery
+        "mastery": mastery,
+        "difficulty_distribution": difficulty_distribution,
+        "total_words": total_words,
+        "reviewed_words": reviewed_words,
+        "error_words": error_words,
+        "error_rate": error_rate,
+        "recent_stats": recent_stats[::-1]  # 按日期升序排列
     }

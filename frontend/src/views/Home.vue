@@ -49,7 +49,7 @@
       </div>
 
       <!-- 功能入口 -->
-      <div class="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="features-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- 开始闯关 -->
         <router-link
           to="/game"
@@ -89,10 +89,20 @@
           <h3 class="text-2xl font-bold mb-2">{{ $t('home.features.library.title') }}</h3>
           <p class="text-sm opacity-90">{{ $t('home.features.library.desc') }}</p>
         </router-link>
+
+        <!-- 学习统计 -->
+        <router-link
+          to="/statistics"
+          class="feature-card bg-gradient-to-br from-teal-500 to-cyan-600 text-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transform hover:scale-105 transition"
+        >
+          <div class="text-5xl mb-4">📊</div>
+          <h3 class="text-2xl font-bold mb-2">{{ $t('home.features.statistics.title') }}</h3>
+          <p class="text-sm opacity-90">{{ $t('home.features.statistics.desc') }}</p>
+        </router-link>
       </div>
 
-      <!-- 设置按钮（右下角） -->
-      <div class="mt-8 flex justify-center">
+      <!-- 底部按钮组 -->
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
         <router-link
           to="/settings"
           class="settings-btn bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 flex items-center gap-2"
